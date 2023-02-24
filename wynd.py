@@ -16,10 +16,14 @@ def base64_to_uft8(base64_string):
     return base64.b64decode(base64_string).decode()
 
 
-balances = {}
+balances: dict = {}
 total_staked = 0
 
-for file in os.listdir(Wynd):
+
+for file in ["JUNOAQUA.json", "AQUAWYND.json"]:
+    balances = {}
+    total_staked = 0
+
     # read the file
     with open(os.path.join(Wynd, file), "r") as f:
         data = json.load(f)
@@ -60,11 +64,11 @@ for file in os.listdir(Wynd):
             balances[address] = amt
             total_staked += amt
 
-# save balances to a file as JSON
-with open(os.path.join(current_dir, "wynd_staked.json"), "w") as f:
-    balances = {
-        k: v for k, v in sorted(balances.items(), key=lambda x: x[1], reverse=True)
-    }
-    json.dump(balances, f, indent=2)
-    print(f"wynd_staked saved to wynd_staked.json. Total Staked: {total_staked:.0f}")
-    # Total Staked: 590727994523
+    # save to a file
+    with open(os.path.join(current_dir, f"wynd_staked_{file}"), "w") as f:
+        balances = {
+            k: v for k, v in sorted(balances.items(), key=lambda x: x[1], reverse=True)
+        }
+        json.dump(balances, f, indent=2)
+        print(f"wynd_staked saved to {file}. Total Staked: {total_staked:.0f}")
+        # Total Staked: 590727994523
