@@ -8,12 +8,6 @@ command -v jq > /dev/null 2>&1 || { echo >&2 "jq not installed. More info: https
 # switch to files current dir
 cd "$(dirname "$0")"
 
-# check if .env file exists, if not exit
-if [ ! -f ".env" ]; then
-    echo "ERROR: .env file not found, please create one with 'cp .env.example .env'. Then edit to your liking."
-    exit 1
-fi
-
 # load env vars from .env file
 # export $(grep -v '^#' .env | xargs)
 
